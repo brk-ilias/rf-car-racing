@@ -1,0 +1,51 @@
+# PPO Configuration for CarRacing-v3
+
+# Environment
+env:
+  name: "CarRacing-v3"
+  continuous: true # Continuous actions for PPO
+  frame_stack: 4
+  skip_frames: 2
+
+# Network
+network:
+  input_channels: 12 # 3 RGB channels * 4 frames
+
+# Agent
+agent:
+  action_dim: 3 # [steering, gas, brake]
+  lr: 0.0003 # 3e-4
+  gamma: 0.99
+  gae_lambda: 0.95
+  clip_epsilon: 0.2
+  value_coef: 0.5
+  entropy_coef: 0.01
+  n_steps: 2048
+  n_epochs: 10
+  batch_size: 64
+  max_grad_norm: 0.5
+
+# Training
+training:
+  max_episodes: 1000
+  target_score: 700
+  convergence_episodes: 100
+  convergence_threshold: 10
+  save_frequency: 100
+  eval_frequency: 50
+  eval_episodes: 5
+
+# Logging
+logging:
+  log_dir: "logs"
+  use_tensorboard: true
+
+# Checkpoints
+checkpoints:
+  save_dir: "checkpoints"
+
+# Random seed
+seed: 42
+
+# Device
+device: "cuda" # or "cpu"

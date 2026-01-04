@@ -1,0 +1,50 @@
+# DQN Configuration for CarRacing-v3
+
+# Environment
+env:
+  name: "CarRacing-v3"
+  continuous: false # Discrete actions for DQN
+  frame_stack: 4
+  skip_frames: 2
+
+# Network
+network:
+  input_channels: 12 # 3 RGB channels * 4 frames
+
+# Agent
+agent:
+  n_actions: 5
+  lr: 0.0001 # 1e-4
+  gamma: 0.99
+  epsilon_start: 1.0
+  epsilon_end: 0.01
+  epsilon_decay: 10000
+  buffer_size: 100000
+  batch_size: 32
+  target_update_freq: 1000
+  learning_starts: 1000 # Minimum buffer size before training
+
+# Training
+training:
+  max_episodes: 1000
+  target_score: 700
+  convergence_episodes: 100
+  convergence_threshold: 10
+  save_frequency: 100
+  eval_frequency: 50
+  eval_episodes: 5
+
+# Logging
+logging:
+  log_dir: "logs"
+  use_tensorboard: true
+
+# Checkpoints
+checkpoints:
+  save_dir: "checkpoints"
+
+# Random seed
+seed: 42
+
+# Device
+device: "cuda" # or "cpu"
