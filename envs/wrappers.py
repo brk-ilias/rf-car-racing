@@ -33,19 +33,8 @@ class CarRacingWrapper(gym.Wrapper):
         # Frame buffer for stacking
         self.frames = deque(maxlen=frame_stack)
 
-        # Action space configuration
-        if not continuous:
-            # Override action space for discrete mode
-            self.action_space = gym.spaces.Discrete(5)
-            # Discrete action mapping:
-            # 0: do nothing, 1: steer right, 2: steer left, 3: gas, 4: brake
-            self.action_map = {
-                0: np.array([0.0, 0.0, 0.0]),
-                1: np.array([0.6, 0.0, 0.0]),  # Moderate right turn
-                2: np.array([-0.6, 0.0, 0.0]),  # Moderate left turn
-                3: np.array([0.0, 1.0, 0.0]),  # Full gas
-                4: np.array([0.0, 0.0, 0.8]),  # Strong brake
-            }
+        # Note: Action space is already set by the underlying environment
+        # No need to override - just use env.action_space as-is
 
         # Observation space: stacked frames
         original_shape = env.observation_space.shape
@@ -80,9 +69,8 @@ class CarRacingWrapper(gym.Wrapper):
         Returns:
             Tuple of (observation, reward, terminated, truncated, info)
         """
-        # Convert discrete action to continuous if needed
-        if not self.continuous:
-            action = self.action_map[action]
+        # Action is passed directly to env - no conversion needed
+        # The underlying environment already has the correct action space set
 
         # Execute action for skip_frames steps
         total_reward = 0.0
@@ -121,6 +109,9 @@ def make_carracing_env(continuous=True, frame_stack=4, skip_frames=2, render_mod
     Returns:
         Wrapped CarRacing environment
     """
+    # Create environment with appropriate action space
+    # For discrete mode (DQN), env will have Discrete(5) action space
+    # For continuous mode (PPO/SAC), env will have Box action space
     env = gym.make("CarRacing-v3", render_mode=render_mode, continuous=continuous)
     env = CarRacingWrapper(
         env, continuous=continuous, frame_stack=frame_stack, skip_frames=skip_frames

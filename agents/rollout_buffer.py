@@ -46,8 +46,13 @@ class RolloutBuffer:
         self.states[self.position] = state
         self.actions[self.position] = action
         self.rewards[self.position] = reward
-        self.values[self.position] = value
-        self.log_probs[self.position] = log_prob
+        # Handle both scalar and array/tensor values
+        self.values[self.position] = (
+            value.item() if hasattr(value, "item") else float(value)
+        )
+        self.log_probs[self.position] = (
+            log_prob.item() if hasattr(log_prob, "item") else float(log_prob)
+        )
         self.dones[self.position] = done
 
         self.position += 1
