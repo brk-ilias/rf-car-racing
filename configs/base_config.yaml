@@ -1,0 +1,28 @@
+env:
+  frame_stack: 4
+  skip_frames: 2
+
+# Training
+training:
+  max_episodes: 1000
+  target_score: 700
+  convergence_episodes: 100
+  convergence_threshold: 10
+  save_frequency: 100
+  eval_frequency: 50
+  eval_episodes: 5
+
+# Logging
+logging:
+  log_dir: "logs"
+  use_tensorboard: true
+
+# Checkpoints
+checkpoints:
+  save_dir: "checkpoints"
+
+# Random seed
+seed: 42
+
+# Device
+device: "cuda" # or "cpu"

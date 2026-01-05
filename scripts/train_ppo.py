@@ -1,14 +1,6 @@
 """Training script for PPO agent on CarRacing-v3."""
 
-import os
-import sys
-import yaml
 import torch
-import numpy as np
-from pathlib import Path
-
-# Add parent directory to path
-sys.path.append(str(Path(__file__).parent.parent))
 
 from envs.wrappers import make_carracing_env
 from models.shared_cnn import SharedCNN
@@ -18,13 +10,7 @@ from utils.training_monitor import TrainingMonitor
 from utils.checkpoint_manager import CheckpointManager
 from utils.logger import Logger
 from utils.seed import set_seed
-
-
-def load_config(config_path):
-    """Load configuration from YAML file."""
-    with open(config_path, "r") as f:
-        config = yaml.safe_load(f)
-    return config
+from utils.load_config import load_config
 
 
 def train_ppo(config_path="configs/ppo_config.yaml"):
@@ -42,7 +28,7 @@ def train_ppo(config_path="configs/ppo_config.yaml"):
 
     # Create environment
     env = make_carracing_env(
-        continuous=config["env"]["continuous"],
+        continuous=config["agent"]["continuous"],
         frame_stack=config["env"]["frame_stack"],
         skip_frames=config["env"]["skip_frames"],
     )
@@ -54,7 +40,7 @@ def train_ppo(config_path="configs/ppo_config.yaml"):
     print(f"Action dimension: {action_dim}")
 
     # Create networks
-    shared_cnn = SharedCNN(input_channels=config["network"]["input_channels"])
+    shared_cnn = SharedCNN(input_channels=12)
     actor_critic = PPOActorCritic(shared_cnn, action_dim=action_dim)
 
     # Create agent

@@ -1,50 +1,12 @@
 # SAC Configuration for CarRacing-v3
 
-# Environment
-env:
-  name: "CarRacing-v3"
-  continuous: true # Continuous actions for SAC
-  frame_stack: 4
-  skip_frames: 2
-
-# Network
-network:
-  input_channels: 12 # 3 RGB channels * 4 frames
-
-# Agent
-agent:
-  action_dim: 3 # [steering, gas, brake]
-  lr: 0.0003 # 3e-4
-  gamma: 0.99
-  tau: 0.005
-  alpha: null # null for automatic tuning
-  target_entropy: null # null for -action_dim
-  buffer_size: 100000
-  batch_size: 256
-  learning_starts: 1000 # Minimum buffer size before training
-
-# Training
-training:
-  max_episodes: 1000
-  target_score: 700
-  convergence_episodes: 100
-  convergence_threshold: 10
-  save_frequency: 100
-  eval_frequency: 50
-  eval_episodes: 5
-  gradient_steps: 1 # Number of gradient steps per env step
-
-# Logging
-logging:
-  log_dir: "logs"
-  use_tensorboard: true
-
-# Checkpoints
-checkpoints:
-  save_dir: "checkpoints"
-
-# Random seed
-seed: 42
-
-# Device
-device: "cuda" # or "cpu"
+continuous: true # Continuous actions for SAC
+action_dim: 3 # [steering, gas, brake]
+lr: 0.0003 # 3e-4
+gamma: 0.99
+tau: 0.005
+alpha: null # null for automatic tuning
+target_entropy: null # null for -action_dim
+buffer_size: 100000
+batch_size: 256
+learning_starts: 1000 # Minimum buffer size before training
