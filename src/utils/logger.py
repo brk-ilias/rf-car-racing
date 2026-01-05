@@ -63,6 +63,19 @@ class Logger:
                 if value is not None:
                     self.writer.add_scalar(f"Training/{key}", value, step)
 
+    def log_eval(self, episode, eval_mean, eval_std):
+        """
+        Log evaluation metrics.
+
+        Args:
+            episode: Episode number when evaluation was performed
+            eval_mean: Mean score across evaluation episodes
+            eval_std: Standard deviation of scores across evaluation episodes
+        """
+        if self.use_tensorboard:
+            self.writer.add_scalar("Evaluation/Mean_Score", eval_mean, episode)
+            self.writer.add_scalar("Evaluation/Std_Score", eval_std, episode)
+
     def save_config(self, config):
         """
         Save configuration to JSON file.

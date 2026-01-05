@@ -12,6 +12,7 @@ from src.utils.checkpoint_manager import CheckpointManager
 from src.utils.logger import Logger
 from src.utils.seed import set_seed
 from src.utils.load_config import load_config
+from src.utils.evaluation import evaluate_agent
 
 
 def train_dqn(config_path="configs/dqn_config.yaml"):
@@ -19,7 +20,7 @@ def train_dqn(config_path="configs/dqn_config.yaml"):
 
     # Load configuration
     config = load_config(config_path)
-    
+
     # Set random seed
     set_seed(config["seed"])
 
@@ -143,6 +144,25 @@ def train_dqn(config_path="configs/dqn_config.yaml"):
                 f"Avg Score: {stats.get('recent_mean', 0):.2f} | "
                 f"Epsilon: {agent.get_epsilon():.3f} | "
                 f"Steps: {total_steps}"
+            )
+
+        # Evaluate agent periodically
+        if episode % config["training"]["eval_frequency"] == 0:
+            eval_mean, eval_std = evaluate_agent(
+                agent, {
+                    "continuous": config["agent"]["continuous"],
+                    "frame_stack": config["env"]["frame_stack"],
+                    "skip_frames": config["env"]["skip_frames"]
+                }, config["training"]["eval_episodes"]
+            )
+            logger.log_eval(
+                episode,
+                eval_mean=eval_mean,
+                eval_std=eval_std,
+            )
+            print(
+                f"  Evaluation ({config['training']['eval_episodes']} episodes): "
+                f"Mean={eval_mean:.2f}, Std={eval_std:.2f}"
             )
 
         # Save checkpoint

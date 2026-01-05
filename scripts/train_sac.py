@@ -1,6 +1,7 @@
 """Training script for SAC agent on CarRacing-v3."""
 
 import torch
+import numpy as np
 
 from src.envs.wrappers import make_carracing_env
 from src.models.shared_cnn import SharedCNN
@@ -11,6 +12,7 @@ from src.utils.checkpoint_manager import CheckpointManager
 from src.utils.logger import Logger
 from src.utils.seed import set_seed
 from src.utils.load_config import load_config
+from src.utils.evaluation import evaluate_agent
 
 
 def train_sac(config_path="configs/sac_config.yaml"):
@@ -113,6 +115,25 @@ def train_sac(config_path="configs/sac_config.yaml"):
 
             # Store transition
             agent.replay_buffer.add(state, action, reward, next_state, float(done))
+
+        # Evaluate agent periodically
+        if episode % config["training"]["eval_frequency"] == 0:
+            eval_mean, eval_std = evaluate_agent(
+                agent, {
+                    "continuous": config["agent"]["continuous"],
+                    "frame_stack": config["env"]["frame_stack"],
+                    "skip_frames": config["env"]["skip_frames"]
+                }, config["training"]["eval_episodes"]
+            )
+            logger.log_eval(
+                episode,
+                eval_mean=eval_mean,
+                eval_std=eval_std,
+            )
+            print(
+                f"  Evaluation ({config['training']['eval_episodes']} episodes): "
+                f"Mean={eval_mean:.2f}, Std={eval_std:.2f}"
+            )
 
             # Update agent
             if len(agent.replay_buffer) >= config["agent"]["learning_starts"]:
