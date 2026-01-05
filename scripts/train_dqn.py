@@ -3,15 +3,15 @@
 import torch
 import numpy as np
 
-from envs.wrappers import make_carracing_env
-from models.shared_cnn import SharedCNN
-from models.dqn import DQNNetwork
-from agents.dqn_agent import DQNAgent
-from utils.training_monitor import TrainingMonitor
-from utils.checkpoint_manager import CheckpointManager
-from utils.logger import Logger
-from utils.seed import set_seed
-from utils.load_config import load_config
+from src.envs.wrappers import make_carracing_env
+from src.models.shared_cnn import SharedCNN
+from src.models.dqn import DQNNetwork
+from src.agents.dqn_agent import DQNAgent
+from src.utils.training_monitor import TrainingMonitor
+from src.utils.checkpoint_manager import CheckpointManager
+from src.utils.logger import Logger
+from src.utils.seed import set_seed
+from src.utils.load_config import load_config
 
 
 def train_dqn(config_path="configs/dqn_config.yaml"):
@@ -19,7 +19,7 @@ def train_dqn(config_path="configs/dqn_config.yaml"):
 
     # Load configuration
     config = load_config(config_path)
-
+    
     # Set random seed
     set_seed(config["seed"])
 

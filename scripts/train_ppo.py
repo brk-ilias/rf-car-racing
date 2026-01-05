@@ -2,15 +2,15 @@
 
 import torch
 
-from envs.wrappers import make_carracing_env
-from models.shared_cnn import SharedCNN
-from models.ppo import PPOActorCritic
-from agents.ppo_agent import PPOAgent
-from utils.training_monitor import TrainingMonitor
-from utils.checkpoint_manager import CheckpointManager
-from utils.logger import Logger
-from utils.seed import set_seed
-from utils.load_config import load_config
+from src.envs.wrappers import make_carracing_env
+from src.models.shared_cnn import SharedCNN
+from src.models.ppo import PPOActorCritic
+from src.agents.ppo_agent import PPOAgent
+from src.utils.training_monitor import TrainingMonitor
+from src.utils.checkpoint_manager import CheckpointManager
+from src.utils.logger import Logger
+from src.utils.seed import set_seed
+from src.utils.load_config import load_config
 
 
 def train_ppo(config_path="configs/ppo_config.yaml"):

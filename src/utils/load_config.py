@@ -20,6 +20,6 @@ def load_config(config_path):
     with open(base_config_path, "r") as base_file:
         base_config = yaml.safe_load(base_file)
 
-    # Merge the base config under the 'agent' key
-    config = {"agent": base_config, **agent_config}
+    # Merge the agent config under the 'agent' key
+    config = {"agent": agent_config, **base_config}
     return config
