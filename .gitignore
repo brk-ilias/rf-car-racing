@@ -10,9 +10,3 @@ __pycache__/
 # PyTorch models
 *.pth
 *.pt
-
-# Project-specific
-checkpoints/
-logs/
-results/
-videos/

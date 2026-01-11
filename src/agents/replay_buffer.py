@@ -1,4 +1,4 @@
-"""Replay buffer for off-policy algorithms (DQN, SAC)."""
+"""Replay buffer for off-policy algorithms DQN."""
 
 import numpy as np
 import torch

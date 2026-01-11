@@ -20,6 +20,9 @@ def evaluate_agent(agent, env_config, n_episodes=5):
 
         while not done:
             action = agent.select_action(state, evaluate=True)
+            # Handle agents that return tuple (action, value, log_prob) vs just action
+            if isinstance(action, tuple):
+                action = action[0]
             next_state, reward, terminated, truncated, _ = eval_env.step(action)
             done = terminated or truncated
             state = next_state

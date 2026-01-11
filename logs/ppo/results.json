@@ -1,0 +1,10 @@
+{
+    "total_episodes": 900,
+    "mean_score": 569.0542980853024,
+    "std_score": 307.22457528801453,
+    "min_score": -81.70731707317032,
+    "max_score": 925.7999999999927,
+    "converged_episode": null,
+    "recent_mean": 752.4253449730561,
+    "recent_std": 199.79065648853972
+}

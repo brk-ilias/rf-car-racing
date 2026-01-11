@@ -9,7 +9,7 @@ class SharedCNN(nn.Module):
 
     Based on Nature DQN architecture adapted for CarRacing-v3.
     Takes RGB images and outputs a feature vector that can be used
-    by different agent architectures (DQN, PPO, SAC).
+    by different agent architectures (DQN, PPO).
 
     Architecture:
         - Conv2d(3, 32, kernel=8, stride=4) -> ReLU -> (32, 23, 23)

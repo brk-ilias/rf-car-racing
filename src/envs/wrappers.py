@@ -111,7 +111,7 @@ def make_carracing_env(continuous=True, frame_stack=4, skip_frames=2, render_mod
     """
     # Create environment with appropriate action space
     # For discrete mode (DQN), env will have Discrete(5) action space
-    # For continuous mode (PPO/SAC), env will have Box action space
+    # For continuous mode PPO, env will have Box action space
     env = gym.make("CarRacing-v3", render_mode=render_mode, continuous=continuous)
     env = CarRacingWrapper(
         env, continuous=continuous, frame_stack=frame_stack, skip_frames=skip_frames

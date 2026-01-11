@@ -1,0 +1,3 @@
+Agent,Total Episodes,Mean Score,Std Score,Min Score,Max Score,Recent Mean,Recent Std,Converged Episode
+DQN,900,573.95,371.85,-75.86,930.20,877.86,40.24,
+PPO,900,569.05,307.22,-81.71,925.80,752.43,199.79,
