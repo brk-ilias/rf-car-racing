@@ -80,7 +80,7 @@ Algorithm-specific heads
 
 ```bash
 # Clone repository
-git clone <repository-url>
+git clone https://github.com/brk-ilias/rf-car-racing.git
 cd reinforcement-learning
 
 # Create virtual environment
